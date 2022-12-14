@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.AcercaDeController">
+   <content>
+      <AnchorPane prefHeight="242.0" prefWidth="536.0">
+         <children>
+            <ImageView fitHeight="190.0" fitWidth="271.0" layoutX="29.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+            <Text layoutX="333.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creado por:" wrappingWidth="97.7294921875" />
+            <Text layoutX="358.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manuel Amoros Egidio" />
+            <Text layoutX="333.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modulo:" />
+            <Text layoutX="358.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso a datos" />
+            <Text layoutX="333.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Centro:" />
+            <Text layoutX="358.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IES Severo Ochoa" />
+         </children>
+      </AnchorPane>
+   </content>
+</DialogPane>

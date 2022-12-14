@@ -81,27 +81,13 @@ public class TableViewController<T> {
                 mostrarAlumnos();
                 break;
             case 1:
-
-                TableColumn profNia = new TableColumn<>("NIA");
-                profNia.setCellValueFactory(new PropertyValueFactory<>("id"));
-                TableColumn proNombre = new TableColumn<>("Nombre");
-                proNombre.setCellValueFactory(new PropertyValueFactory<>("nombreProfesor"));
-                TableColumn profApellidos = new TableColumn<>("Apellidos");
-                profApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidoProfesor"));
-                TableColumn profTelefono = new TableColumn<>("Telefono");
-                profTelefono.setCellValueFactory(new PropertyValueFactory<>("telefonoProfesor"));
-                TableColumn profEmail = new TableColumn<>("Email");
-                profEmail.setCellValueFactory(new PropertyValueFactory<>("emailProfesor"));
-                TableColumn profDireccion = new TableColumn<>("Direccion");
-                profDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionProfesor"));
-
-                tvPrincipal.getColumns().addAll(profNia, proNombre, profApellidos, profTelefono, profEmail,profDireccion);
-
-                profesorDAOImp.findAll().forEach(profesor ->tvPrincipal.getItems().add(profesor));
+                mostrarProfesores();
                 break;
             case 2:
+                mostrarClases();
                 break;
             case 3:
+                mostrarAsginaturas();
                 break;
         }
     }
@@ -126,6 +112,50 @@ public class TableViewController<T> {
         tvPrincipal.getColumns().addAll(alunNia, aluNombre, aluApellidos, aluClase, aluTelefono, aluEmail, aluDireccion);
 
         alumnoDAOImp.findAll().forEach(alumno -> tvPrincipal.getItems().add(alumno));
+    }
+    private void mostrarProfesores(){
+        tvPrincipal.getItems().clear();
+        tvPrincipal.getColumns().clear();
+        TableColumn profNia = new TableColumn<>("NIA");
+        profNia.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn proNombre = new TableColumn<>("Nombre");
+        proNombre.setCellValueFactory(new PropertyValueFactory<>("nombreProfesor"));
+        TableColumn profApellidos = new TableColumn<>("Apellidos");
+        profApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidoProfesor"));
+        TableColumn profTelefono = new TableColumn<>("Telefono");
+        profTelefono.setCellValueFactory(new PropertyValueFactory<>("telefonoProfesor"));
+        TableColumn profEmail = new TableColumn<>("Email");
+        profEmail.setCellValueFactory(new PropertyValueFactory<>("emailProfesor"));
+        TableColumn profDireccion = new TableColumn<>("Direccion");
+        profDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionProfesor"));
+
+        tvPrincipal.getColumns().addAll(profNia, proNombre, profApellidos, profTelefono, profEmail,profDireccion);
+
+        profesorDAOImp.findAll().forEach(profesor ->tvPrincipal.getItems().add(profesor));
+    }
+    private void mostrarClases(){
+        tvPrincipal.getItems().clear();
+        tvPrincipal.getColumns().clear();
+        TableColumn clasId = new TableColumn<>("Id");
+        clasId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn clasNombre = new TableColumn<>("Nombre");
+        clasNombre.setCellValueFactory(new PropertyValueFactory<>("nombreClase"));
+        TableColumn clasAula = new TableColumn<>("Aula");
+        clasAula.setCellValueFactory(new PropertyValueFactory<>("aula"));
+        TableColumn clasTutor = new TableColumn<>("Tutor");
+        clasTutor.setCellValueFactory(new PropertyValueFactory<>(""));
+        tvPrincipal.getColumns().addAll(clasId,clasNombre,clasAula,clasTutor);
+        claseDAOImp.findAll().forEach(clase -> tvPrincipal.getItems().add(clase));
+    }
+    private void mostrarAsginaturas(){
+        tvPrincipal.getItems().clear();
+        tvPrincipal.getColumns().clear();
+        TableColumn asigId = new TableColumn<>("Id");
+        asigId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn asigNombre = new TableColumn<>("Nombre");
+        asigNombre.setCellValueFactory(new PropertyValueFactory<>("nombreAsignatura"));
+        tvPrincipal.getColumns().addAll(asigId,asigNombre);
+        asignaturaDAOImp.findAll().forEach(asignatura -> tvPrincipal.getItems().add(asignatura));
     }
     @FXML
     protected void onClickAcercaDe(){

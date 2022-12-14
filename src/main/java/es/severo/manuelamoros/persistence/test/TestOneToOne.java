@@ -14,11 +14,12 @@ public class TestOneToOne {
 
             Profesor p = new Profesor("Ramon","Cajal","ramonYcajal@gmail.com","+21 5645622","Calle falsa nº123");
             Clase c = new Clase("1CCOW","aula5",p);
-            c.setId(1L);
+            c.setId(5L);
             Alumno a = new Alumno("Rickk","Calle santiago segura","+31 54555",c);
 
-
+            session.persist(c);
             session.persist(a);
+
 
             session.flush();
 

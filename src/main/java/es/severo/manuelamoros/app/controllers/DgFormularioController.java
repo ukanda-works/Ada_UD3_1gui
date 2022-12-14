@@ -60,12 +60,48 @@ public class DgFormularioController {
                 cbClase.getItems().addAll(DialogDB.getAllClase());
                 break;
             case 1:
+                lbId.setText("NIA");
+                lbNombre.setText("Nombre: ");
+                lbApellidos.setText("Apellidos");
+                lbCorreo.setText("Email:");
+                lbTelefono.setText("Telefono");
+                lbDireccion.setText("Direccion");
+                lbClase.setVisible(false);
+                cbClase.setVisible(false);
                 break;
             case 2:
+                lbId.setText("Id");
+                lbNombre.setText("Nombre: ");
+                lbCorreo.setText("Aula:");
+                lbClase.setText("Tutor:");
+                cbClase.getItems().addAll(DialogDB.getProfSinClase());
+                lbApellidos.setVisible(false);
+                tfApellidos.setVisible(false);
+                lbTelefono.setVisible(false);
+                tfTelefono.setVisible(false);
+                lbDireccion.setVisible(false);
+                tfDireccion.setVisible(false);
+                tfTelefono.setVisible(false);
                 break;
             case 3:
+                lbId.setText("Id:");
+                lbTelefono.setText("Nombre:");
+
+                lbApellidos.setVisible(false);
+                tfApellidos.setVisible(false);
+                lbTelefono.setVisible(false);
+                tfTelefono.setVisible(false);
+                lbDireccion.setVisible(false);
+                tfDireccion.setVisible(false);
+                lbClase.setVisible(false);
+                cbClase.setVisible(false);
+                lbNombre.setVisible(false);
+                tfNombre.setVisible(false);
                 break;
         }
+    }
+    protected void loadObject(int id){
+
     }
 
 }

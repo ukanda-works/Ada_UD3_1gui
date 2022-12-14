@@ -19,8 +19,8 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem fx:id="miAdd" mnemonicParsing="false" text="Añadir" onAction="#onClickAdd" />
-            <MenuItem fx:id="miEdit" mnemonicParsing="false" text="Editar" />
-            <MenuItem fx:id="miDel" mnemonicParsing="false" text="Borrar" />
+            <MenuItem fx:id="miEdit" mnemonicParsing="false" text="Editar" onAction="#onClickEdit" />
+            <MenuItem fx:id="miDel" mnemonicParsing="false" text="Borrar" onAction="#onClickBorrar"/>
               <MenuItem fx:id="miDuplicate" mnemonicParsing="false" text="Duplicar" />
             <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem fx:id="expXml" mnemonicParsing="false" text="Exportar XML" />

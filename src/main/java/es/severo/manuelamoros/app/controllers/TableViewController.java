@@ -4,6 +4,7 @@ import es.severo.manuelamoros.persistence.dao.AlumnoDAOImp;
 import es.severo.manuelamoros.persistence.dao.AsignaturaDAOImp;
 import es.severo.manuelamoros.persistence.dao.ClaseDAOImp;
 import es.severo.manuelamoros.persistence.dao.ProfesorDAOImp;
+import es.severo.manuelamoros.persistence.entity.Alumno;
 import es.severo.manuelamoros.persistence.util.DialogDB;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -64,6 +65,19 @@ public class TableViewController<T> {
                         DialogDB.addAlumno(controller);
                         mostrarAlumnos();
                         break;
+                    case 1:
+                        DialogDB.addProfesor(controller);
+                        mostrarProfesores();
+                        break;
+                    case 2:
+                        DialogDB.addClase(controller);
+                        mostrarClases();
+                        break;
+                    case 3:
+                        DialogDB.addAsignatura(controller);
+                        mostrarAsginaturas();
+                        break;
+
                 }
             }
         }catch (IOException e) {
@@ -181,6 +195,67 @@ public class TableViewController<T> {
 
     @FXML
     protected void onClickBorrar(){
+        if (!tvPrincipal.getSelectionModel().isEmpty()){
+            int selected = tvPrincipal.getSelectionModel().getSelectedIndex();
+            switch (selected){
+                case 0:
 
+                    mostrarAlumnos();
+                    break;
+                case 1:
+                    mostrarProfesores();
+                    break;
+                case 2:
+                    mostrarClases();
+                    break;
+                case  3:
+                    mostrarAsginaturas();
+                    break;
+            }
+        }else {
+            //mostrar error
+        }
+    }
+
+    @FXML
+    protected void onClickEdit(){
+        try {
+            //lanzar excepcion personalizada si no hay nada seleccionado
+            Dialog<ButtonType> d = new Dialog<>();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(TableViewController.class.getResource("/es/severo/manuelamoros/dgFormulario.fxml"));
+            d.initOwner(tvPrincipal.getScene().getWindow());
+            d.setResizable(true);
+
+            d.setTitle("Editar "+cbTablas.getItems().get(cbTablas.getSelectionModel().getSelectedIndex()));
+            d.getDialogPane().setContent(loader.load());
+            d.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
+            d.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+            DgFormularioController controller = loader.getController();
+            controller.load(cbTablas.getSelectionModel().getSelectedIndex());
+            Optional<ButtonType> response = d.showAndWait();
+            if (response.isPresent() && response.get() == ButtonType.APPLY){
+                switch (cbTablas.getSelectionModel().getSelectedIndex()){
+                    case 0:
+                        DialogDB.addAlumno(controller);
+                        mostrarAlumnos();
+                        break;
+                    case 1:
+                        DialogDB.addProfesor(controller);
+                        mostrarProfesores();
+                        break;
+                    case 2:
+                        DialogDB.addClase(controller);
+                        mostrarClases();
+                        break;
+                    case 3:
+                        DialogDB.addAsignatura(controller);
+                        mostrarAsginaturas();
+                        break;
+                }
+            }
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

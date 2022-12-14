@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.DialogPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<DialogPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.AcercaDeController">
+<DialogPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.AcercaDeController">
    <content>
       <AnchorPane prefHeight="242.0" prefWidth="536.0">
          <children>
-            <ImageView fitHeight="190.0" fitWidth="271.0" layoutX="29.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="229.0" fitWidth="240.0" layoutX="29.0" layoutY="24.0" pickOnBounds="true">
+               <image>
+                  <Image url="@img/img-big.jpg" />
+               </image></ImageView>
             <Text layoutX="333.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Creado por:" wrappingWidth="97.7294921875" />
             <Text layoutX="358.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manuel Amoros Egidio" />
             <Text layoutX="333.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modulo:" />

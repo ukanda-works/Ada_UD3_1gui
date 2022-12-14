@@ -83,7 +83,7 @@ public class Clase {
     }
 
     public void mostrar() {
-        System.out.println( "Clase: "+ nombreClase+", aula: "+aula+", Tutor: " + tutor.getNombreProfesor()+ tutor.getApellidoProfesor()+"id=" + id+"\n");
+        System.out.println( "Clase: "+ nombreClase+", aula: "+aula+", Tutor: " + tutor.getNombreProfesor()+ tutor.getApellidoProfesor()+", id=" + id+"\n");
     }
 /*
     @Override

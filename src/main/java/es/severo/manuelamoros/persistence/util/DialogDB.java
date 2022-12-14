@@ -30,7 +30,7 @@ public class DialogDB {
         a.setEmailAlumno(controller.tfEmail.getText());
         Clase c = claseDaoImp.findByName(controller.cbClase.getItems().get(controller.cbClase.getSelectionModel().getSelectedIndex()));
         a.setClase(c);
-        alumnoDAOImp.create(a);
+        alumnoDAOImp.save(a);
     }
 
     public static List<String> getAllClase(){

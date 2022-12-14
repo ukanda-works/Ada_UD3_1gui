@@ -62,6 +62,7 @@ public class TableViewController<T> {
                 switch (cbTablas.getSelectionModel().getSelectedIndex()){
                     case 0:
                         DialogDB.addAlumno(controller);
+                        mostrarAlumnos();
                         break;
                 }
             }
@@ -77,26 +78,7 @@ public class TableViewController<T> {
         tvPrincipal.getColumns().clear();
         switch (a){
             case 0:
-
-                TableColumn alunNia = new TableColumn<>("NIA");
-                alunNia.setCellValueFactory(new PropertyValueFactory<>("id"));
-                TableColumn aluNombre = new TableColumn<>("Nombre");
-                aluNombre.setCellValueFactory(new PropertyValueFactory<>("nombreAlumno"));
-                TableColumn aluApellidos = new TableColumn<>("Apellidos");
-                aluApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidosAlumno"));
-                TableColumn aluClase = new TableColumn<>("Clase");
-                aluClase.setCellValueFactory(new PropertyValueFactory<>("clase"));
-                TableColumn aluTelefono = new TableColumn<>("Telefono");
-                aluTelefono.setCellValueFactory(new PropertyValueFactory<>("telefonoAlumno"));
-                TableColumn aluEmail = new TableColumn<>("Email");
-                aluEmail.setCellValueFactory(new PropertyValueFactory<>("emailAlumno"));
-                TableColumn aluDireccion = new TableColumn<>("Direccion");
-                aluDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionAlumno"));
-
-                tvPrincipal.getColumns().addAll(alunNia, aluNombre, aluApellidos, aluClase, aluTelefono, aluEmail, aluDireccion);
-
-                alumnoDAOImp.findAll().forEach(alumno -> tvPrincipal.getItems().add(alumno));
-
+                mostrarAlumnos();
                 break;
             case 1:
 
@@ -123,7 +105,28 @@ public class TableViewController<T> {
                 break;
         }
     }
+    private void mostrarAlumnos(){
+        tvPrincipal.getItems().clear();
+        tvPrincipal.getColumns().clear();
+        TableColumn alunNia = new TableColumn<>("NIA");
+        alunNia.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn aluNombre = new TableColumn<>("Nombre");
+        aluNombre.setCellValueFactory(new PropertyValueFactory<>("nombreAlumno"));
+        TableColumn aluApellidos = new TableColumn<>("Apellidos");
+        aluApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidosAlumno"));
+        TableColumn aluClase = new TableColumn<>("Clase");
+        aluClase.setCellValueFactory(new PropertyValueFactory<>("clase"));
+        TableColumn aluTelefono = new TableColumn<>("Telefono");
+        aluTelefono.setCellValueFactory(new PropertyValueFactory<>("telefonoAlumno"));
+        TableColumn aluEmail = new TableColumn<>("Email");
+        aluEmail.setCellValueFactory(new PropertyValueFactory<>("emailAlumno"));
+        TableColumn aluDireccion = new TableColumn<>("Direccion");
+        aluDireccion.setCellValueFactory(new PropertyValueFactory<>("direccionAlumno"));
 
+        tvPrincipal.getColumns().addAll(alunNia, aluNombre, aluApellidos, aluClase, aluTelefono, aluEmail, aluDireccion);
+
+        alumnoDAOImp.findAll().forEach(alumno -> tvPrincipal.getItems().add(alumno));
+    }
     @FXML
     protected void onClickAcercaDe(){
         try{
@@ -144,5 +147,10 @@ public class TableViewController<T> {
     @FXML
     protected void onClickSalir(){
         Platform.exit();
+    }
+
+    @FXML
+    protected void onClickBorrar(){
+
     }
 }

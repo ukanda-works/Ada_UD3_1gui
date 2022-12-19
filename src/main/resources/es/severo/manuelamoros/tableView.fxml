@@ -18,15 +18,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="miAdd" mnemonicParsing="false" text="Añadir" onAction="#onClickAdd" />
-            <MenuItem fx:id="miEdit" mnemonicParsing="false" text="Editar" onAction="#onClickEdit" />
-            <MenuItem fx:id="miDel" mnemonicParsing="false" text="Borrar" onAction="#onClickBorrar"/>
-              <MenuItem fx:id="miDuplicate" mnemonicParsing="false" text="Duplicar" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem fx:id="expXml" mnemonicParsing="false" text="Exportar XML" />
-              <MenuItem fx:id="impXml" mnemonicParsing="false" text="Importar XML" />
-              <MenuItem fx:id="exJson" mnemonicParsing="false" text="Exportar Json" />
-              <MenuItem fx:id="imJson" mnemonicParsing="false" text="Importar Json" />
+            <MenuItem fx:id="miAdd" mnemonicParsing="false" onAction="#onClickAdd" text="Añadir" />
+            <MenuItem fx:id="miEdit" mnemonicParsing="false" onAction="#onClickEdit" text="Editar" />
+            <MenuItem fx:id="miDel" mnemonicParsing="false" onAction="#onClickBorrar" text="Borrar" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="miExit" mnemonicParsing="false" onAction="#onClickSalir" text="Salir" />
           </items>
@@ -42,22 +36,15 @@
          <children>
             <ComboBox fx:id="cbTablas" layoutX="58.0" layoutY="9.0" onAction="#onClickcbTablas" prefWidth="150.0" />
             <Label layoutX="14.0" layoutY="13.0" prefHeight="16.0" prefWidth="36.0" text="Tabla" />
-            <Label layoutX="351.0" layoutY="13.0" text="Filtrar por" />
-            <TextField fx:id="tfTermino" layoutX="569.0" layoutY="9.0" prefHeight="24.0" prefWidth="119.0" />
-            <ComboBox fx:id="cbFiltrar" layoutX="427.0" layoutY="9.0" prefHeight="24.0" prefWidth="128.0" />
-            <Button fx:id="btFilter" layoutX="706.0" layoutY="9.0" mnemonicParsing="false" text="Filtrar" />
+            <Label layoutX="328.0" layoutY="13.0" text="Filtrar por" />
+            <TextField fx:id="tfTermino" layoutX="538.0" layoutY="9.0" prefHeight="24.0" prefWidth="119.0" />
+            <ComboBox fx:id="cbFiltrar" layoutX="400.0" layoutY="9.0" prefHeight="24.0" prefWidth="128.0" />
+            <Button fx:id="btFilter" layoutX="666.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickFiltrar" text="Filtrar" />
+            <Button fx:id="btQuitarFiltro" layoutX="724.0" layoutY="9.0" mnemonicParsing="false" text="Des filtrar" onAction="#onClickDesFiltrar"/>
          </children></AnchorPane>
       <VBox prefHeight="386.0" prefWidth="640.0">
          <children>
-            <TableView fx:id="tvPrincipal" prefHeight="245.0" prefWidth="640.0" />
-            <AnchorPane prefHeight="136.0" prefWidth="668.0">
-               <children>
-                  <Label fx:id="lbSleccionado" layoutX="22.0" layoutY="14.0" text="Sleccionado" />
-                  <Label fx:id="lbNombre" layoutX="192.0" layoutY="14.0" text="Nombre:" />
-                  <Label fx:id="lbId" layoutX="123.0" layoutY="14.0" text="ID:" />
-                  <Label fx:id="lbApellidos" layoutX="345.0" layoutY="14.0" text="Apellidos: " />
-               </children>
-            </AnchorPane>
+            <TableView fx:id="tvPrincipal" prefHeight="406.0" prefWidth="807.0" />
          </children>
       </VBox>
   </children>

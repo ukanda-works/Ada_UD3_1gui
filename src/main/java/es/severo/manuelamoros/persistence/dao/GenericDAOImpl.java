@@ -42,6 +42,15 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
     @Override
+    public void update(T t) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
+            session.beginTransaction();
+            session.update(t);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Override
     public void save(T entity) {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             session.beginTransaction();
@@ -49,6 +58,8 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
             session.getTransaction().commit();
         }
     }
+
+
 
     @Override
     public void deleteById(Long id) {

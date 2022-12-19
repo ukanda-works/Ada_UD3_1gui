@@ -66,13 +66,17 @@ public class Clase {
         this.aula = aula;
     }
 
-    public Profesor getTutor() {
+    public String getTutor() {
+        return tutor.getNombreProfesor()+" "+tutor.getApellidoProfesor();
+    }
+    public Profesor getTutorTutor() {
         return tutor;
     }
-
     public void setTutor(Profesor tutor) {
         this.tutor = tutor;
     }
+
+
 
     public List<Alumno> getAlumnos() {
         return alumnos;

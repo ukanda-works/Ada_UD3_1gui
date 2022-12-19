@@ -13,6 +13,8 @@ module es.severo.manuelamoros {
     opens es.severo.manuelamoros.persistence.entity;
 
     exports es.severo.manuelamoros.app.controllers;
-    exports es.severo.manuelamoros;
+
+    exports es.severo.manuelamoros.app;
+    opens es.severo.manuelamoros.app;
 }
 

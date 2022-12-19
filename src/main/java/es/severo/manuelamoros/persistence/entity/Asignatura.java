@@ -2,6 +2,9 @@ package es.severo.manuelamoros.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "asignatura")
 public class Asignatura {
@@ -15,6 +18,14 @@ public class Asignatura {
     private String nombreAsignatura;
 
 
+    @ManyToMany(mappedBy = "asignaturas")
+    private List<Alumno> alumnoList = new ArrayList<>();
+
+    public Asignatura(Long id, String nombreAsignatura, List<Alumno> alumnoList) {
+        this.id = id;
+        this.nombreAsignatura = nombreAsignatura;
+        this.alumnoList = alumnoList;
+    }
 
     public Asignatura(Long id, String nombreAsignatura) {
         this.id = id;
@@ -42,6 +53,14 @@ public class Asignatura {
 
     public void setNombreAsignatura(String nombreAsignatura) {
         this.nombreAsignatura = nombreAsignatura;
+    }
+
+    public List<Alumno> getAlumnoList() {
+        return alumnoList;
+    }
+
+    public void setAlumnoList(List<Alumno> alumnoList) {
+        this.alumnoList = alumnoList;
     }
 
     public void mostrar() {

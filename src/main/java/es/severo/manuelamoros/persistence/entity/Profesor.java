@@ -26,13 +26,17 @@ public class Profesor {
     @Column(nullable = false, name = "direccion_profesor")
     private String direccionProfesor;
 
-    public Profesor(Long id, String nombreProfesor, String apellidoProfesor, String emailProfesor, String telefonoProfesor, String direccionProfesor) {
+    @Column(nullable = false,unique = true,name = "dni_profesor")
+    private String dniProfesor;
+
+    public Profesor(Long id, String nombreProfesor, String apellidoProfesor, String emailProfesor, String telefonoProfesor, String direccionProfesor, String dniProfesor) {
         this.id = id;
         this.nombreProfesor = nombreProfesor;
         this.apellidoProfesor = apellidoProfesor;
         this.emailProfesor = emailProfesor;
         this.telefonoProfesor = telefonoProfesor;
         this.direccionProfesor = direccionProfesor;
+        this.dniProfesor = dniProfesor;
     }
 
     public Profesor() {
@@ -71,6 +75,8 @@ public class Profesor {
     }
 
     public String getEmailProfesor() {
+        if (emailProfesor == null)
+            return "no dispoble";
         return emailProfesor;
     }
 
@@ -79,6 +85,8 @@ public class Profesor {
     }
 
     public String getTelefonoProfesor() {
+        if (telefonoProfesor==null)
+            return "no dispoble";
         return telefonoProfesor;
     }
 
@@ -94,8 +102,16 @@ public class Profesor {
         this.direccionProfesor = direccionProfesor;
     }
 
+    public String getDniProfesor() {
+        return dniProfesor;
+    }
+
+    public void setDniProfesor(String dniProfesor) {
+        this.dniProfesor = dniProfesor;
+    }
+
     public void mostrar() {
-        System.out.println("Profesor: " + nombreProfesor+apellidoProfesor+", DNI: "+id+", email :"+ emailProfesor+", telefono: " +telefonoProfesor+", direccion personal: " + direccionProfesor +"\n");
+        System.out.println("Profesor: " + nombreProfesor+apellidoProfesor+", DNI: "+dniProfesor+", email :"+ emailProfesor+", telefono: " +telefonoProfesor+", direccion personal: " + direccionProfesor +"\n");
     }
 
     @Override
@@ -107,6 +123,7 @@ public class Profesor {
                 ", emailProfesor='" + emailProfesor + '\'' +
                 ", telefonoProfesor='" + telefonoProfesor + '\'' +
                 ", direccionProfesor='" + direccionProfesor + '\'' +
+                ", dniProfesor='" + dniProfesor + '\'' +
                 '}';
     }
 }

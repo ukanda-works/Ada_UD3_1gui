@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane prefHeight="409.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.DgFormularioController">
+<GridPane prefHeight="432.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.DgFormularioController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="301.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="493.0" minWidth="10.0" prefWidth="299.0" />
@@ -24,8 +25,10 @@
    </rowConstraints>
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-
-</AnchorPane>
+         <children>
+            <ComboBox fx:id="cbAsignaturas" layoutX="14.0" layoutY="36.0" prefWidth="150.0" />
+            <Button fx:id="btAdd" layoutX="180.0" layoutY="36.0" mnemonicParsing="false" onAction="#onlcickAdd" text="Añadir" />
+         </children></AnchorPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label fx:id="lbId" text="Id" />
@@ -38,7 +41,7 @@
             <TextField fx:id="tfNombre" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="608.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+      <HBox alignment="CENTER" prefHeight="68.0" prefWidth="594.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <children>
             <Label fx:id="lbDireccion" text="Label" />
             <TextField fx:id="tfDireccion" />
@@ -68,5 +71,6 @@
             <TextField fx:id="tfApellidos" />
          </children>
       </HBox>
+      <ListView fx:id="lvAsignaturas" onKeyPressed="#myKeyListener" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
    </children>
 </GridPane>

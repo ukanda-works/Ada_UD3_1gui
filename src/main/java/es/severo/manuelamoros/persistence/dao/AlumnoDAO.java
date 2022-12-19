@@ -9,4 +9,10 @@ public interface AlumnoDAO extends GenericDAO<Alumno> {
 
 
     List<Asignatura> getAsignaturasById(Long id);
-}
+    Alumno findByNia(String nia);
+    void deleteByNia(String nia);
+
+    List<Alumno> findByNombre(String nombre);
+    List<Alumno> findByApellido(String apellido);
+    List<Alumno> findByDireccion(String direccion);
+ }

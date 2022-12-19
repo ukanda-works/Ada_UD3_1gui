@@ -29,27 +29,31 @@ public class Alumno {
     @Column(nullable = false,name = "direccion_alumno")
     private String direccionAlumno;
 
+    @Column(nullable = false,unique = true,name = "nia_alumno")
+    private String niaAlumno;
+
     @ManyToOne
     @JoinColumn(name = "id_clase")
     private Clase clase;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @ManyToMany(fetch=FetchType.EAGER,
+            cascade = {
+                CascadeType.ALL
     })
     @JoinTable(name = "alumnos_has_Asignatura",
-            joinColumns = @JoinColumn(name = "id_alumno"),
-            inverseJoinColumns = @JoinColumn(name = "id_asignatura")
+            joinColumns = {@JoinColumn(name = "id_alumno")},
+            inverseJoinColumns = {@JoinColumn(name = "id_asignatura")}
     )
-    private List<Asignatura> asignaturas = new ArrayList<>();
+    private List<Asignatura> asignaturas;
 
-    public Alumno(Long id, String nombreAlumno, String apellidosAlumno, String telefonoAlumno, String emailAlumno, String direccionAlumno, Clase clase, List<Asignatura> asignaturas) {
+    public Alumno(Long id, String nombreAlumno, String apellidosAlumno, String telefonoAlumno, String emailAlumno, String direccionAlumno, String niaAlumno, Clase clase, List<Asignatura> asignaturas) {
         this.id = id;
         this.nombreAlumno = nombreAlumno;
         this.apellidosAlumno = apellidosAlumno;
         this.telefonoAlumno = telefonoAlumno;
         this.emailAlumno = emailAlumno;
         this.direccionAlumno = direccionAlumno;
+        this.niaAlumno = niaAlumno;
         this.clase = clase;
         this.asignaturas = asignaturas;
     }
@@ -104,6 +108,14 @@ public class Alumno {
         this.emailAlumno = emailAlumno;
     }
 
+    public String getNiaAlumno() {
+        return niaAlumno;
+    }
+
+    public void setNiaAlumno(String niaAlumno) {
+        this.niaAlumno = niaAlumno;
+    }
+
     public String getDireccionAlumno() {
         return direccionAlumno;
     }
@@ -111,16 +123,28 @@ public class Alumno {
     public void setDireccionAlumno(String direccionAlumno) {
         this.direccionAlumno = direccionAlumno;
     }
-
-    public Clase getClase() {
+    public Clase getClaseClase(){
         return clase;
+    }
+    public String getClase() {
+        return clase.getNombreClase();
     }
 
     public void setClase(Clase clase) {
         this.clase = clase;
     }
 
-    public List<Asignatura> getAsignaturas() {
+    public String getAsignaturas() {
+        if (asignaturas.isEmpty())
+            return "sin matriculaciones";
+        String listAsignaturas = "";
+        for (Asignatura a: asignaturas) {
+            listAsignaturas+= a.getNombreAsignatura();
+            listAsignaturas+= " ,";
+        }
+        return listAsignaturas;
+    }
+    public List<Asignatura> getAsignaturasAsig() {
         return asignaturas;
     }
 
@@ -146,7 +170,7 @@ public class Alumno {
                 ", clase="+clase.getNombreClase()+
                 ", asignaturas=" +listAsignaturas);
     }
-    
+
 
     @Override
     public String toString() {

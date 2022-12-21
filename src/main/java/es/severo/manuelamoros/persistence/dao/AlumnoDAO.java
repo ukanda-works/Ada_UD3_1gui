@@ -15,4 +15,6 @@ public interface AlumnoDAO extends GenericDAO<Alumno> {
     List<Alumno> findByNombre(String nombre);
     List<Alumno> findByApellido(String apellido);
     List<Alumno> findByDireccion(String direccion);
+
+    void updateAlu(Alumno alumno);
  }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "alumno")
@@ -38,8 +39,8 @@ public class Alumno {
 
     @ManyToMany(fetch=FetchType.EAGER,
             cascade = {
-                CascadeType.ALL
-    })
+                    CascadeType.ALL
+            })
     @JoinTable(name = "alumnos_has_Asignatura",
             joinColumns = {@JoinColumn(name = "id_alumno")},
             inverseJoinColumns = {@JoinColumn(name = "id_asignatura")}
@@ -135,14 +136,16 @@ public class Alumno {
     }
 
     public String getAsignaturas() {
-        if (asignaturas.isEmpty())
+        if (asignaturas==null){
             return "sin matriculaciones";
-        String listAsignaturas = "";
-        for (Asignatura a: asignaturas) {
-            listAsignaturas+= a.getNombreAsignatura();
-            listAsignaturas+= " ,";
+        }else{
+            String listAsignaturas = "";
+            for (Asignatura a: asignaturas) {
+                listAsignaturas+= a.getNombreAsignatura();
+                listAsignaturas+= " ,";
+            }
+            return listAsignaturas;
         }
-        return listAsignaturas;
     }
     public List<Asignatura> getAsignaturasAsig() {
         return asignaturas;
@@ -184,5 +187,9 @@ public class Alumno {
                 ", clase=" + clase +
                 ", asignaturas=" + asignaturas +
                 '}';
+    }
+    public void delAsig(Asignatura asignatura){
+        this.asignaturas = this.asignaturas.stream().filter(asignatura1 -> !asignatura1.getNombreAsignatura().equals(asignatura.getNombreAsignatura())).collect(Collectors.toList());
+
     }
 }

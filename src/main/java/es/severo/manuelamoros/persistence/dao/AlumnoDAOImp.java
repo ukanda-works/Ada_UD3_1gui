@@ -24,7 +24,7 @@ public class AlumnoDAOImp extends GenericDAOImpl<Alumno> implements AlumnoDAO{
 
     @Override
     public Alumno findByNia(String nia) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Alumno> criteria = builder.createQuery(Alumno.class);
             Root<Alumno> root = criteria.from(Alumno.class);
@@ -91,6 +91,27 @@ public class AlumnoDAOImp extends GenericDAOImpl<Alumno> implements AlumnoDAO{
             criteria.select(root);
             criteria.where(builder.equal(root.get(Alumno_.NIA_ALUMNO),nia));
             alumno.setId(session.createQuery(criteria).getSingleResult().getId());
+            session.beginTransaction();
+            session.merge(alumno);
+            session.getTransaction().commit();
+        }
+    }
+    public void updatee(Alumno alumno){
+        String nia = alumno.getNiaAlumno();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Alumno alumno1 = findByNia(nia);
+            alumno1.setEmailAlumno(alumno.getEmailAlumno());
+            alumno1.setTelefonoAlumno(alumno.getTelefonoAlumno());
+            alumno1.setApellidosAlumno(alumno.getApellidosAlumno());
+            alumno1.setAsignaturas(alumno.getAsignaturasAsig());
+            alumno1.setNombreAlumno(alumno.getNombreAlumno());
+            session.beginTransaction();
+            session.update(alumno1);
+            session.getTransaction().commit();
+        }
+    }
+    public void updateAlu(Alumno alumno) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             session.beginTransaction();
             session.merge(alumno);
             session.getTransaction().commit();

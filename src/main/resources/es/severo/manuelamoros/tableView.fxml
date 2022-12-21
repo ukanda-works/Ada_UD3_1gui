@@ -20,7 +20,9 @@
           <items>
             <MenuItem fx:id="miAdd" mnemonicParsing="false" onAction="#onClickAdd" text="Añadir" />
             <MenuItem fx:id="miEdit" mnemonicParsing="false" onAction="#onClickEdit" text="Editar" />
+              <MenuItem fx:id="miDesEdit" mnemonicParsing="false" onAction="#onClickDesEdit" text="Deshacer Editar" />
             <MenuItem fx:id="miDel" mnemonicParsing="false" onAction="#onClickBorrar" text="Borrar" />
+              <MenuItem fx:id="midESDel" mnemonicParsing="false" onAction="#onClickDesBorrar" text="Deshacer Borrar" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="miExit" mnemonicParsing="false" onAction="#onClickSalir" text="Salir" />
           </items>

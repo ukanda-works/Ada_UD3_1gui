@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="432.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.DgFormularioController">
+<GridPane prefHeight="489.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.severo.manuelamoros.app.controllers.DgFormularioController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="301.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="493.0" minWidth="10.0" prefWidth="299.0" />
@@ -21,13 +21,15 @@
       <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="50.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="169.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
-            <ComboBox fx:id="cbAsignaturas" layoutX="14.0" layoutY="36.0" prefWidth="150.0" />
-            <Button fx:id="btAdd" layoutX="180.0" layoutY="36.0" mnemonicParsing="false" onAction="#onlcickAdd" text="Añadir" />
+            <ComboBox fx:id="cbAsignaturas" layoutX="14.0" layoutY="24.0" prefWidth="150.0" />
+            <Button fx:id="btAdd" layoutX="173.0" layoutY="24.0" mnemonicParsing="false" onAction="#onlcickAdd" text="Añadir" />
+            <Label fx:id="lbExplicacion" layoutX="13.0" layoutY="56.0" prefHeight="62.0" prefWidth="271.0" />
          </children></AnchorPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -72,5 +74,11 @@
          </children>
       </HBox>
       <ListView fx:id="lvAsignaturas" onKeyPressed="#myKeyListener" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <children>
+            <Button fx:id="btcancel" layoutX="167.0" layoutY="18.0" mnemonicParsing="false" onAction="#onClickClose" text="Cancelar" />
+            <Button fx:id="btApli" layoutX="87.0" layoutY="18.0" mnemonicParsing="false" onAction="#onClickApply" text="Aplicar" />
+         </children>
+      </AnchorPane>
    </children>
 </GridPane>

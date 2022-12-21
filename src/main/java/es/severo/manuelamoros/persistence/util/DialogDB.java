@@ -23,7 +23,7 @@ public class DialogDB {
     private static ProfesorDAOImp profesorDAOImp = new ProfesorDAOImp();
     private static AsignaturaDAOImp asignaturaDAOImp = new AsignaturaDAOImp();
 
-    public static void addAlumno(DgFormularioController controller){
+    public static Alumno addAlumno(DgFormularioController controller){
         Alumno a = new Alumno();
         a.setNiaAlumno(controller.tfId.getText());
         a.setNombreAlumno(controller.tfNombre.getText());
@@ -35,10 +35,10 @@ public class DialogDB {
         a.setClase(c);
         List<Asignatura> asignaturas = controller.lvAsignaturas.getItems().stream().map(name->asignaturaDAOImp.findByName(name)).collect(Collectors.toList());
         a.setAsignaturas(asignaturas);
-        alumnoDAOImp.save(a);
+        return a;
     }
 
-    public static void updateAlumno(DgFormularioController controller){
+    public static Alumno updateAlumno(DgFormularioController controller){
         Alumno a = new Alumno();
         a.setNiaAlumno(controller.tfId.getText());
         a.setNombreAlumno(controller.tfNombre.getText());
@@ -51,10 +51,10 @@ public class DialogDB {
 
         List<Asignatura> asignaturas = controller.lvAsignaturas.getItems().stream().map(name->asignaturaDAOImp.findByName(name)).collect(Collectors.toList());
         a.setAsignaturas(asignaturas);
-        alumnoDAOImp.update(a);
+        return a;
     }
 
-    public static void addProfesor(DgFormularioController controller){
+    public static Profesor addProfesor(DgFormularioController controller){
         Profesor p = new Profesor();
         p.setApellidoProfesor(controller.tfApellidos.getText());
         p.setDniProfesor(controller.tfId.getText());
@@ -62,10 +62,10 @@ public class DialogDB {
         p.setDireccionProfesor(controller.tfDireccion.getText());
         p.setEmailProfesor(controller.tfEmail.getText());
         p.setTelefonoProfesor(controller.tfTelefono.getText());
-        profesorDAOImp.save(p);
+        return p;
     }
 
-    public static void updateProfesor(DgFormularioController controller){
+    public static Profesor updateProfesor(DgFormularioController controller){
         Profesor p = new Profesor();
         p.setApellidoProfesor(controller.tfApellidos.getText());
         p.setDniProfesor(controller.tfId.getText());
@@ -73,19 +73,19 @@ public class DialogDB {
         p.setDireccionProfesor(controller.tfDireccion.getText());
         p.setEmailProfesor(controller.tfEmail.getText());
         p.setTelefonoProfesor(controller.tfTelefono.getText());
-        profesorDAOImp.update(p);
+        return p;
     }
 
-    public static void addClase(DgFormularioController controller){
+    public static Clase addClase(DgFormularioController controller){
         Clase c = new Clase();
         c.setAula(controller.tfEmail.getText());
         c.setNombreClase(controller.tfNombre.getText());
         String dniProf = controller.cbClase.getSelectionModel().getSelectedItem().split("-")[1];
         c.setTutor(profesorDAOImp.findByDni(dniProf));
-        claseDaoImp.save(c);
+        return c;
     }
 
-    public static void updateClase(DgFormularioController controller){
+    public static Clase updateClase(DgFormularioController controller){
         Clase c = new Clase();
         c.setAula(controller.tfEmail.getText());
         c.setNombreClase(controller.tfNombre.getText());
@@ -95,20 +95,20 @@ public class DialogDB {
         tutor.mostrar();
         c.setTutor(tutor);
 
-        claseDaoImp.update(c);
+        return c;
     }
 
-    public static void addAsignatura(DgFormularioController controller){
+    public static Asignatura addAsignatura(DgFormularioController controller){
         Asignatura asig = new Asignatura();
         asig.setNombreAsignatura(controller.tfTelefono.getText());
-        asignaturaDAOImp.save(asig);
+        return asig;
     }
 
-    public static void updateAsignatura(DgFormularioController controller){
+    public static Asignatura updateAsignatura(DgFormularioController controller){
         Asignatura asig = new Asignatura();
         asig.setId(Long.valueOf(controller.tfId.getText()));
         asig.setNombreAsignatura(controller.tfTelefono.getText());
-        asignaturaDAOImp.save(asig);
+        return asig;
     }
 
     public static List<String> getAllClase(){
@@ -122,7 +122,7 @@ public class DialogDB {
 
         for (Profesor p : profesors) {
             if (!tutores.contains(p.getId())){
-                profesoresSin.add(p.getNombreProfesor()+"-"+p.getId());
+                profesoresSin.add(p.getNombreProfesor()+"-"+p.getDniProfesor());
             }
         }
         return profesoresSin;

@@ -8,7 +8,12 @@ import es.severo.manuelamoros.persistence.entity.Alumno;
 import es.severo.manuelamoros.persistence.entity.Asignatura;
 import es.severo.manuelamoros.persistence.entity.Clase;
 import es.severo.manuelamoros.persistence.entity.Profesor;
+import es.severo.manuelamoros.persistence.exceptions.CriticalException;
 import es.severo.manuelamoros.persistence.exceptions.CustomExecption;
+import es.severo.manuelamoros.persistence.service.AlumnoDataService;
+import es.severo.manuelamoros.persistence.service.AsignaturaDataService;
+import es.severo.manuelamoros.persistence.service.ClaseDataService;
+import es.severo.manuelamoros.persistence.service.ProfesorDataService;
 import es.severo.manuelamoros.persistence.util.DialogDB;
 import es.severo.manuelamoros.persistence.util.TableViewDBUtil;
 import javafx.application.Platform;
@@ -18,12 +23,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.lang.model.element.Element;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TableViewController<T> {
+public class TableViewController {
 
     private AlumnoDAOImp alumnoDAOImp = new AlumnoDAOImp();
     private ProfesorDAOImp profesorDAOImp = new ProfesorDAOImp();
@@ -40,13 +46,22 @@ public class TableViewController<T> {
     private ComboBox<String> cbFiltrar;
     @FXML
     private TextField tfTermino;
+    @FXML
+    private MenuItem midESDel;
+    @FXML
+    private MenuItem miDesEdit;
+
+    private List editedImtem;
+    private List deledtImtem;
 
     @FXML
-    public void initialize() throws IOException{
+    public void initialize(){
         cbTablas.getItems().add("Alumnos");
         cbTablas.getItems().add("Profesores");
         cbTablas.getItems().add("Clase");
         cbTablas.getItems().add("Asignatura");
+        midESDel.setDisable(true);
+        miDesEdit.setDisable(true);
     }
 
     @FXML
@@ -62,39 +77,30 @@ public class TableViewController<T> {
 
             d.setTitle("Añadir nueva entrada a: "+cbTablas.getItems().get(cbTablas.getSelectionModel().getSelectedIndex()));
             d.getDialogPane().setContent(loader.load());
-            d.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-            d.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             DgFormularioController controller = loader.getController();
             controller.load(cbTablas.getSelectionModel().getSelectedIndex());
-            Optional<ButtonType> response = d.showAndWait();
-            if (response.isPresent() && response.get() == ButtonType.APPLY){
-                switch (cbTablas.getSelectionModel().getSelectedIndex()){
-                    case 0:
-                        DialogDB.addAlumno(controller);
-                        mostrarAlumnos();
-                        break;
-                    case 1:
-                        DialogDB.addProfesor(controller);
-                        mostrarProfesores();
-                        break;
-                    case 2:
-                        DialogDB.addClase(controller);
-                        mostrarClases();
-                        break;
-                    case 3:
-                        DialogDB.addAsignatura(controller);
-                        mostrarAsginaturas();
-                        break;
-
-                }
-            }
+             d.showAndWait();
+            actualizarSelect();
         }catch (IOException e) {
-            throw new RuntimeException(e);
+            try {
+                throw new CriticalException("error al acceder a un recurso: "+e.getMessage(),"Error al acceder al recurso del formulario", CriticalException.CriticalType.Acces);
+            } catch (CriticalException ex) {
+                ex.showError();
+            }
         }
     }
 
     @FXML
     protected void onClickcbTablas(){
+        if (editedImtem!=null)
+            editedImtem = null;
+        if (deledtImtem!=null)
+            deledtImtem=null;
+        midESDel.setDisable(true);
+        miDesEdit.setDisable(true);
+        actualizarSelect();
+    }
+    protected void actualizarSelect(){
         int a = cbTablas.getSelectionModel().getSelectedIndex();
         tvPrincipal.getItems().clear();
         tvPrincipal.getColumns().clear();
@@ -117,7 +123,7 @@ public class TableViewController<T> {
         tvPrincipal.getItems().clear();
         tvPrincipal.getColumns().clear();
         TableColumn alunNia = new TableColumn<>("NIA");
-        alunNia.setCellValueFactory(new PropertyValueFactory<>("id"));
+        alunNia.setCellValueFactory(new PropertyValueFactory<>("niaAlumno"));
         TableColumn aluNombre = new TableColumn<>("Nombre");
         aluNombre.setCellValueFactory(new PropertyValueFactory<>("nombreAlumno"));
         TableColumn aluApellidos = new TableColumn<>("Apellidos");
@@ -140,7 +146,7 @@ public class TableViewController<T> {
         list.add("NIA");
         list.add("Nombre");
         list.add("Apellido");
-        list.add("Direccion");
+        list.add("Asignatura ");
         cbFiltrar.getItems().clear();
         cbFiltrar.getItems().addAll(list);
     }
@@ -234,31 +240,48 @@ public class TableViewController<T> {
     }
 
     @FXML
-    protected void onClickBorrar() throws CustomExecption {
+    protected void onClickBorrar() {
         try {
         if (!tvPrincipal.getSelectionModel().isEmpty()){
-            ObservableList selectedItems= tvPrincipal.getSelectionModel().getSelectedItems();
+           ObservableList item= tvPrincipal.getSelectionModel().getSelectedItems();
+
             int selected = cbTablas.getSelectionModel().getSelectedIndex();
+            try {
             switch (selected){
                 case 0:
-                    selectedItems.stream().forEach(a -> TableViewDBUtil.deleteAlu((Alumno) a));
+                    deledtImtem = new ArrayList<Alumno>();
+                    deledtImtem.add(item.get(0));
+                    AlumnoDataService.deleteAlu((Alumno) item.get(0));
                     mostrarAlumnos();
+                    midESDel.setDisable(false);
                     break;
                 case 1:
-                    selectedItems.stream().forEach(a-> TableViewDBUtil.deleteProf((Profesor) a));
+                    deledtImtem = new ArrayList<Profesor>();
+                    deledtImtem.add(item.get(0));
+                    ProfesorDataService.deleteProf((Profesor) item.get(0));
                     mostrarProfesores();
+                    midESDel.setDisable(false);
                     break;
                 case 2:
-                    selectedItems.stream().forEach(a-> TableViewDBUtil.deleteClase((Clase) a));
+                    deledtImtem = new ArrayList<Clase>();
+                    deledtImtem.add(item.get(0));
+                    ClaseDataService.deleteClase((Clase) item.get(0));
                     mostrarClases();
+                    midESDel.setDisable(false);
                     break;
                 case  3:
-                    selectedItems.stream().forEach(a-> TableViewDBUtil.deleteAsig((Asignatura) a));
+                    deledtImtem = new ArrayList<Asignatura>();
+                    deledtImtem.add(item.get(0));
+                    AsignaturaDataService.deleteAsig((Asignatura) item.get(0));
                     mostrarAsginaturas();
+                    midESDel.setDisable(false);
                     break;
                 default:
                     throw new CustomExecption("No hay ningun tipo seleccionado", CustomExecption.CustomType.Any_thing_slected);
 
+            }
+            } catch (CustomExecption e) {
+                e.showAsWarring();
             }
         }else {
             throw new CustomExecption("No hay nada seleccionado", CustomExecption.CustomType.Any_thing_slected);
@@ -271,8 +294,9 @@ public class TableViewController<T> {
     @FXML
     protected void onClickEdit(){
         try {
-            ObservableList selectedItems= tvPrincipal.getSelectionModel().getSelectedItems();
-            if (selectedItems.size() == 0)
+            ObservableList item = tvPrincipal.getSelectionModel().getSelectedItems();
+
+            if (item.size() == 0)
                 throw new CustomExecption("No hay nada seleccionado", CustomExecption.CustomType.Any_thing_slected);
             //lanzar excepcion personalizada si no hay nada seleccionado
             Dialog<ButtonType> d = new Dialog<>();
@@ -283,46 +307,68 @@ public class TableViewController<T> {
 
             d.setTitle("Editar "+cbTablas.getItems().get(cbTablas.getSelectionModel().getSelectedIndex()));
             d.getDialogPane().setContent(loader.load());
-            d.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-            d.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             DgFormularioController controller = loader.getController();
+
             controller.load(cbTablas.getSelectionModel().getSelectedIndex());
             switch (cbTablas.getSelectionModel().getSelectedIndex()){
                 case 0:
-                    controller.loadAlu((Alumno) selectedItems.get(0));
+                    editedImtem = new ArrayList<Alumno>();
+                    editedImtem.add(item.get(0));
+                    controller.loadAlu((Alumno) editedImtem.get(0));
                     break;
                 case 1:
-                    controller.loadProf((Profesor)  selectedItems.get(0));
+                    editedImtem = new ArrayList<Profesor>();
+                    editedImtem.add(item.get(0));
+                    controller.loadProf((Profesor)  editedImtem.get(0));
                     break;
                 case 2:
-                    controller.loadClase((Clase)  selectedItems.get(0));
+                    editedImtem = new ArrayList<Clase>();
+                    editedImtem.add(item.get(0));
+                    controller.loadClase((Clase)  editedImtem.get(0));
                     break;
                 case 3:
-                    controller.loadAsignatura((Asignatura)  selectedItems.get(0));
+                    editedImtem = new ArrayList<Asignatura>();
+                    editedImtem.add(item.get(0));
+                    controller.loadAsignatura((Asignatura) editedImtem.get(0));
                     break;
             }
+            d.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
             Optional<ButtonType> response = d.showAndWait();
-            if (response.isPresent() && response.get() == ButtonType.APPLY){
+           if (response.isPresent() && response.get() == ButtonType.CANCEL){
+
+           }else{
                 switch (cbTablas.getSelectionModel().getSelectedIndex()){
                     case 0:
-                        DialogDB.updateAlumno(controller);
-                        mostrarAlumnos();
+                        Alumno alumno = DialogDB.updateAlumno(controller);
+                        editedImtem.add(alumno);
+                        AlumnoDataService.updateAlumno(alumno);
+                        miDesEdit.setDisable(false);
                         break;
                     case 1:
-                        DialogDB.updateProfesor(controller);
-                        mostrarProfesores();
+                        Profesor profesor =DialogDB.updateProfesor(controller);
+                        editedImtem.add(profesor);
+                        ProfesorDataService.updateProfesor(profesor);
+                        miDesEdit.setDisable(false);
                         break;
                     case 2:
-                        DialogDB.updateClase(controller);
-                        mostrarClases();
+                        Clase clase = DialogDB.updateClase(controller);
+                        editedImtem.add(clase);
+                        ClaseDataService.updateClase(clase);
+                        miDesEdit.setDisable(false);
                         break;
                     case 3:
-                        DialogDB.updateAsignatura(controller);
-                        mostrarAsginaturas();
+                        Asignatura asignatura = DialogDB.updateAsignatura(controller);
+                        asignatura.mostrar();
+                        editedImtem.add(asignatura);
+                        AsignaturaDataService.updateAsignatura(asignatura);
+                        miDesEdit.setDisable(false);
                         break;
                 }
-            }
-            d.close();
+           }
+                actualizarSelect();
+
+
         }catch (IOException e) {
             throw new RuntimeException(e);
         }catch (CustomExecption e){
@@ -372,6 +418,73 @@ public class TableViewController<T> {
 
         }catch (CustomExecption e){
             e.showAsWarring();
+        }
+    }
+    @FXML
+    private void onClickDesEdit(){
+        try {
+        switch (cbTablas.getSelectionModel().getSelectedIndex()){
+            case 0:
+                Alumno alumno0 = (Alumno) editedImtem.get(0);
+                AlumnoDataService.updateAlumno(alumno0);
+                miDesEdit.setDisable(true);
+                mostrarAlumnos();
+                break;
+            case 1:
+                Profesor profesor0 = (Profesor) editedImtem.get(0);
+                ProfesorDataService.updateProfesor(profesor0);
+                miDesEdit.setDisable(true);
+                mostrarProfesores();
+                break;
+            case 2:
+                Clase clase0 = (Clase) editedImtem.get(0);
+                ClaseDataService.updateClase(clase0);
+                miDesEdit.setDisable(true);
+                mostrarClases();
+                break;
+            case 3:
+                Asignatura asignatura0 = (Asignatura) editedImtem.get(0);
+                AsignaturaDataService.updateAsignatura(asignatura0);
+                miDesEdit.setDisable(true);
+                mostrarAsginaturas();
+                break;
+        }
+        } catch (CustomExecption e) {
+            e.showAsWarring();
+        }
+    }
+
+    @FXML
+    private void onClickDesBorrar(){
+        try {
+        switch (cbTablas.getSelectionModel().getSelectedIndex()){
+            case 0:
+                Alumno alumno0 = (Alumno) deledtImtem.get(0);
+                AlumnoDataService.updateAlumnoBien(alumno0);
+                midESDel.setDisable(true);
+                mostrarAlumnos();
+                break;
+            case 1:
+                Profesor profesor0 = (Profesor) deledtImtem.get(0);
+                ProfesorDataService.addProfesor(profesor0);
+                midESDel.setDisable(true);
+                mostrarProfesores();
+                break;
+            case 2:
+                Clase clase0 = (Clase) deledtImtem.get(0);
+                ClaseDataService.addClase(clase0);
+                midESDel.setDisable(true);
+                mostrarClases();
+                break;
+            case 3:
+                Asignatura asignatura0 = (Asignatura) deledtImtem.get(0);
+                AsignaturaDataService.addAsignatura(asignatura0);
+                midESDel.setDisable(true);
+                mostrarAsginaturas();
+                break;
+        }
+    }catch (CustomExecption e){
+        e.showAsWarring();
         }
     }
 }

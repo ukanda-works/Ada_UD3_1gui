@@ -1,8 +1,10 @@
 package es.severo.manuelamoros.app.controllers;
 
+import es.severo.manuelamoros.app.App;
 import es.severo.manuelamoros.persistence.exceptions.CriticalException;
 import es.severo.manuelamoros.persistence.util.AlertsUtil;
 import es.severo.manuelamoros.persistence.util.HibernateUtil;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -35,7 +37,8 @@ public class AccesDialogController {
     private void onClickAcept(){
         setValues();
         AlertsUtil.showInfo("Setings","","Configuracion cargada correctamente, vuelva a ejecutar el programa");
-        System.exit(0);
+        Stage stage =(Stage) tfPass.getScene().getWindow();
+        stage.close();
     }
 
 }

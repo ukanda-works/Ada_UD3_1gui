@@ -14,8 +14,8 @@ public class CriticalException extends Exception{
     private String header;
 public enum CriticalType{
         Database,
-        Hibernate
-
+        Hibernate,
+        Acces
     }
 
     public CriticalException(String message, String header, CriticalType type) {

@@ -1,6 +1,7 @@
 package es.severo.manuelamoros.persistence.util;
 
 import es.severo.manuelamoros.persistence.exceptions.CriticalException;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -25,7 +26,7 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory;
     private HibernateUtil(){}
     private static SessionFactory builderSessionFactory(){
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure("META-INF/hibernate.cfg.xml").build();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure(new File("src/main/resources/META-INF/hibernate.cfg.xml")).build();
         Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
         return metadata.getSessionFactoryBuilder().build();
     }
@@ -51,6 +52,7 @@ public class HibernateUtil {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
+
             Document doc = builder.parse(new File("src/main/resources/META-INF/hibernate.cfg.xml"));
             NodeList items = doc.getElementsByTagName("property");
             for (int ix = 0; ix < items.getLength(); ix++) {

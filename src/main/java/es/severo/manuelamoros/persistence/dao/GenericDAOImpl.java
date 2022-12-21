@@ -45,7 +45,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
     public void update(T t) {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             session.beginTransaction();
-            session.update(t);
+            session.merge(t);
             session.getTransaction().commit();
         }
     }
@@ -74,7 +74,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
     public void delete(T entity) {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             session.beginTransaction();
-            session.remove(entity);
+            session.delete(entity);
             session.getTransaction().commit();
         }
     }

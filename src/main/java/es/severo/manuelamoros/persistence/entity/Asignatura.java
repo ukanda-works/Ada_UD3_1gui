@@ -18,7 +18,11 @@ public class Asignatura {
     private String nombreAsignatura;
 
 
-    @ManyToMany(mappedBy = "asignaturas")
+    @ManyToMany(mappedBy = "asignaturas",
+            cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<Alumno> alumnoList = new ArrayList<>();
 
     public Asignatura(Long id, String nombreAsignatura, List<Alumno> alumnoList) {
@@ -64,12 +68,12 @@ public class Asignatura {
     }
 
     public void mostrar() {
-        System.out.println( "Asignatura: "+nombreAsignatura +", id:"+ id+"\n");
+        System.out.println( "AsignaturaDataService: "+nombreAsignatura +", id:"+ id+"\n");
     }
 
     @Override
     public String toString() {
-        return "Asignatura{" +
+        return "AsignaturaDataService{" +
                 "id=" + id +
                 ", nombreAsignatura='" + nombreAsignatura + '\'' +
                 '}';

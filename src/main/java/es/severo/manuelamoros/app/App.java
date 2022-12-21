@@ -5,6 +5,7 @@ import es.severo.manuelamoros.persistence.exceptions.CriticalException;
 import es.severo.manuelamoros.persistence.util.AlertsUtil;
 import es.severo.manuelamoros.persistence.util.HibernateUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
@@ -48,6 +49,8 @@ public class App extends Application {
             d.setTitle("Conection setings");
             d.getDialogPane().setContent(loader.load());
             d.showAndWait();
+            Platform.exit();
+
     }
 
 }

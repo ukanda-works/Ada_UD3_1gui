@@ -8,7 +8,8 @@ public class CustomExecption extends Exception {
         DataBase,
         Any_thing_found,
         unexpected_error,
-        Any_thing_slected
+        Any_thing_slected,
+        Persistence
     }
 
     private CustomType type;
